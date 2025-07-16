@@ -39,8 +39,11 @@ export DASHSCOPE_ASR_MODEL="paraformer-v2"
 export DASHSCOPE_LLM_MODEL="qwen-turbo"
 
 # 上下文合并配置
-export CONTEXT_MERGE_PROVIDER="openai"  # openai 或 dashscope
+export CONTEXT_MERGE_PROVIDER="openai"  # openai, dashscope, 或 gemini
 export CONTEXT_MERGE_MODEL="gpt-3.5-turbo"  # 或 qwen-turbo 等
+
+# Gemini配置（用于上下文合并）
+export GOOGLE_CLOUD_PROJECT="your-google-cloud-project-id"
 
 # OSS配置（用于语音识别）
 export OSS_ACCESS_KEY_ID="your-oss-access-key-id"
@@ -116,6 +119,7 @@ python main.py
 | `DASHSCOPE_LLM_MODEL` | 文本生成模型 | qwen-turbo |
 | `CONTEXT_MERGE_PROVIDER` | 上下文合并提供商 | openai |
 | `CONTEXT_MERGE_MODEL` | 上下文合并模型 | gpt-3.5-turbo |
+| `GOOGLE_CLOUD_PROJECT` | Google Cloud项目ID | - |
 | `OSS_ACCESS_KEY_ID` | 阿里云OSS AccessKey ID | - |
 | `OSS_ACCESS_KEY_SECRET` | 阿里云OSS AccessKey Secret | - |
 | `OSS_ENDPOINT` | OSS服务端点 | https://oss-cn-beijing.aliyuncs.com |
@@ -141,6 +145,11 @@ python test_asr.py
 ### 测试上下文合并功能
 ```bash
 python test_merge.py
+```
+
+### 测试Gemini命令行功能
+```bash
+python test_gemini.py
 ```
 
 注意：需要先创建一个 `test_audio.wav` 文件用于测试。

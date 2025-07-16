@@ -15,8 +15,11 @@ DASHSCOPE_ASR_MODEL = os.getenv("DASHSCOPE_ASR_MODEL", "paraformer-v2")
 DASHSCOPE_LLM_MODEL = os.getenv("DASHSCOPE_LLM_MODEL", "qwen-turbo")
 
 # 上下文合并配置
-CONTEXT_MERGE_PROVIDER = os.getenv("CONTEXT_MERGE_PROVIDER", "openai")  # openai 或 dashscope
+CONTEXT_MERGE_PROVIDER = os.getenv("CONTEXT_MERGE_PROVIDER", "openai")  # openai, dashscope, 或 gemini
 CONTEXT_MERGE_MODEL = os.getenv("CONTEXT_MERGE_MODEL", "gpt-3.5-turbo")  # 默认使用OpenAI
+
+# Gemini配置
+GOOGLE_CLOUD_PROJECT = os.getenv("GOOGLE_CLOUD_PROJECT", "")
 
 # OSS配置
 OSS_ACCESS_KEY_ID = os.getenv("OSS_ACCESS_KEY_ID", "")

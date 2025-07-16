@@ -92,6 +92,9 @@ DASHSCOPE_LLM_MODEL=qwen-turbo
 CONTEXT_MERGE_PROVIDER=openai
 CONTEXT_MERGE_MODEL=gpt-3.5-turbo
 
+# Gemini配置（用于上下文合并）
+GOOGLE_CLOUD_PROJECT=your-google-cloud-project-id-here
+
 # 阿里云OSS配置（用于语音识别）
 OSS_ACCESS_KEY_ID=your-oss-access-key-id-here
 OSS_ACCESS_KEY_SECRET=your-oss-access-key-secret-here

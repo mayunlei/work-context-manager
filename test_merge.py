@@ -24,6 +24,9 @@ def test_context_merge():
     elif config.CONTEXT_MERGE_PROVIDER.lower() == "dashscope" and not config.DASHSCOPE_API_KEY:
         print("❌ 未设置 DASHSCOPE_API_KEY")
         return False
+    elif config.CONTEXT_MERGE_PROVIDER.lower() == "gemini" and not config.GOOGLE_CLOUD_PROJECT:
+        print("❌ 未设置 GOOGLE_CLOUD_PROJECT")
+        return False
     
     # 创建语音识别器
     recognizer = SpeechRecognizer()

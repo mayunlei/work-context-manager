@@ -44,6 +44,8 @@ class ContextSwitcher:
         print(f"上下文文件: {config.CONTEXT_FILE}")
         print(f"历史记录文件: {config.HISTORY_FILE}")
         print(f"上下文合并: {config.CONTEXT_MERGE_PROVIDER} ({config.CONTEXT_MERGE_MODEL})")
+        if config.CONTEXT_MERGE_PROVIDER.lower() == "gemini":
+            print(f"Google Cloud项目: {config.GOOGLE_CLOUD_PROJECT}")
         
         # 检查API配置
         if not config.OPENAI_API_KEY and not config.DASHSCOPE_API_KEY:

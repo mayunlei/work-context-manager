@@ -217,6 +217,8 @@ class SpeechRecognizer:
             # 根据配置选择提供商
             if config.CONTEXT_MERGE_PROVIDER.lower() == "dashscope":
                 return self._merge_with_dashscope(prompt)
+            elif config.CONTEXT_MERGE_PROVIDER.lower() == "gemini":
+                return self._merge_with_gemini(prompt)
             else:
                 return self._merge_with_openai(prompt)
                 
@@ -263,4 +265,53 @@ class SpeechRecognizer:
                 
         except Exception as e:
             print(f"DashScope上下文合并失败: {e}")
+            raise e
+    
+    def _merge_with_gemini(self, prompt: str) -> str:
+        """使用Gemini命令行合并上下文"""
+        try:
+            import subprocess
+            import json
+            
+            # 检查是否设置了Google Cloud项目
+            if not config.GOOGLE_CLOUD_PROJECT:
+                raise Exception("未设置 GOOGLE_CLOUD_PROJECT 环境变量")
+            
+            # 设置环境变量
+            env = os.environ.copy()
+            env['GOOGLE_CLOUD_PROJECT'] = config.GOOGLE_CLOUD_PROJECT
+            
+            # 构建gemini命令
+            cmd = ['gemini', '-p', prompt]
+            
+            print(f"调用Gemini命令: {' '.join(cmd)}")
+            
+            # 执行命令
+            result = subprocess.run(
+                cmd,
+                capture_output=True,
+                text=True,
+                env=env,
+                timeout=60  # 60秒超时
+            )
+            
+            if result.returncode == 0:
+                # 成功执行
+                response_text = result.stdout.strip()
+                print(f"Gemini响应: {response_text[:100]}...")
+                return response_text
+            else:
+                # 执行失败
+                error_msg = result.stderr.strip()
+                print(f"Gemini命令执行失败: {error_msg}")
+                raise Exception(f"Gemini命令执行失败: {error_msg}")
+                
+        except subprocess.TimeoutExpired:
+            print("Gemini命令执行超时")
+            raise Exception("Gemini命令执行超时")
+        except FileNotFoundError:
+            print("未找到gemini命令，请确保已安装Google Cloud CLI")
+            raise Exception("未找到gemini命令，请确保已安装Google Cloud CLI")
+        except Exception as e:
+            print(f"Gemini上下文合并失败: {e}")
             raise e 
